@@ -1,0 +1,24 @@
+.container{
+    width: 971px;
+    height:100%;
+    background-color: beige;
+}
+
+.item1{
+    width:971px;
+    height:50px;
+    background-color: #ded32d;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    word-spacing:10px;
+
+
+}
+
+.item2{
+    width:971px;
+    height: 800px;
+    background-color: #a59090;
+}

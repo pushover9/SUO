@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="Board">
+ 
+ 	<!-- 게시판 저장 -->
+ 	<insert id="insert_b" parameterType="kr.suo.vo.BoardVO">
+ 		insert into tbl_board(bno,writer,title,content,category,regdate) values(bno_seq.nextval,#{writer},#{title},#{content},#{category},sysdate)
+ 	</insert>
+ 	
+ 	
+ 	<select id="b_cate" parameterType="b" resultType="b">
+ 	 select * from(select rowNum rNum, bno, writer, title,regdate,viewcnt,category,reply_cnt
+	 from(
+     select * from tbl_board 
+     <where>
+     category=#{category}
+     <if test="find_field == ''"></if>
+     <if test="find_field == 'title'">
+      and title like #{find_name}
+     </if>
+     <if test="find_field == 'cont'">
+      and content like #{find_name}
+     </if>
+    </where>
+     order by regdate desc))
+     where rNum &gt; = #{startrow} and rNum &lt; = #{endrow}
+ 	</select>
+ 	<!--  &gt;은 >, &lt;은 < 를 뜻한다.  -->
+ 	
+ 	
+ 	<select id="list_b" parameterType="b" resultType="b">
+ 		 select * from(select rowNum rNum, bno, writer, title,regdate,viewcnt,category,reply_cnt
+	 from(
+     select * from tbl_board 
+     <where>
+     <if test="find_field == ''"></if>
+     <if test="find_field == 'title'">
+      and title like #{find_name}
+     </if>
+     <if test="find_field == 'cont'">
+      and content like #{find_name}
+     </if>
+    </where>
+     order by regdate desc))
+     where rNum &gt; = #{startrow} and rNum &lt; = #{endrow}
+ 	</select>
+ 
+ 	<!-- 검색전은 총게시물 . 검색이후 검색된 게시물수 
+ 	resultType속성은 반환 자료형 타입 . count()함수는 총 레코드 개수 반환.-->
+	<select id="count_cate" resultType="int">
+		select count(bno) from tbl_board
+		<where>
+			category=#{category}
+			<if test="find_field == ''"></if>
+			<if test="find_field == 'title'">
+				and title like #{find_name}
+			</if>
+			<if test="find_field == 'cont'">
+				and content like #{find_name}
+			</if>
+		</where>
+	</select>
+ 	
+ 	<select id="count_b" resultType="int">
+ 		select count(*) from tbl_board
+ 	</select>
+ 	
+ 	<select id="b_cont" resultType="b">
+ 	 select * from tbl_board where bno=#{bno}
+ 	</select>
+ 	
+ 	<update id="b_edit" parameterType="b">
+ 	 update tbl_board set writer=#{writer}, title=#{title}, content=#{content} where bno=#{bno}
+ 	</update>
+ 	
+ 	<delete id="b_del" parameterType="int">
+ 	 delete from tbl_board where bno = #{bno}
+ 	</delete>
+ 	
+ 	<delete id="board_img_del">
+ 	 delete from tbl_board_file where bno=#{bno}
+ 	</delete>
+ 	
+ 	<update id="b_hit" parameterType="int">
+ 	 update tbl_board set viewcnt = viewcnt+1 where bno=#{bno}
+ 	</update>
+ 	
+ 	<!-- 댓글 수 카운트 -->
+	<update id="upReplyCnt" parameterType="java.util.Map">
+	 update tbl_board set reply_cnt=reply_cnt+#{count} where bno=#{bno}
+	</update>
+	
+	<insert id="uploadFile" parameterType="HashMap">
+	INSERT INTO
+    tbl_board_file (FILE_NUM, O_NAME, FILE_NAME, FILE_SIZE,bno)
+    VALUES (file_seq.nextval, #{originalfileName}, #{saveFileName}, #{fileSize}, 
+    (SELECT LAST_NUMBER FROM USER_SEQUENCES	WHERE SEQUENCE_NAME = 'BNO_SEQ')-1)
+	</insert>
+	
+	<select id="cont_img" resultType="b">
+	select * from tbl_board_file where bno=#{bno}
+	</select>
+	
+ </mapper>

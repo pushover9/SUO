@@ -1,0 +1,117 @@
+/* 마우스오버 시 팁 설명 css
+.wrap2{
+    position: relative;
+    display : inline-block;
+    margin : auto;
+    margin-top: 70px;
+}
+.wrap2 .tooltip{
+    position: absolute;
+    width : 200px;
+    padding : 0px;
+    visibility: hidden;
+    background-color: darkslategray;
+    color:white;
+    text-align: center;
+    z-index: 1;
+    top:100%;
+    left:50%;
+    margin-left:-100px;
+}
+.wrap2 .tooltip::after{
+    content:"";
+    position: absolute;
+    top:80%;
+    left:50%;
+    margin: -60% 0 0 -10px;
+    border-width : 10px;
+    border-style: solid;
+}
+.wrap2:hover .tooltip{visibility: visible;}
+*/
+
+.container{
+    width: 971px;
+    height:100%;
+    background-color: beige;
+}
+
+.item1{
+    width:971px;
+    height:50px;
+    background-color: #bb8c8c;
+    position:relative;
+
+}
+
+.item2{
+    width:900px;
+    height: 200px;
+    background-color: #00cfbc;
+    margin-top:10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.item3{
+    width:900px;
+    height:1200px;
+    background-color: #09cb56;
+    margin:10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div{
+
+}
+table,th,td{
+    margin-right: auto; margin-left: auto;
+    font-size: 20px;
+    background-color: white;
+    border: 0px solid black;
+    border-collapse:collapse; /*테이블 빈공간 제거*/
+    border-spacing:0; /*테이블 빈공간 제거*/
+
+
+}
+
+.container2{
+    display: flex;
+    width:450px;
+
+}
+
+.item2-1{
+    width:400px;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items:center;
+    background-color: white;
+    line-height: 1.1;
+
+}
+
+.item3 table{
+    width:90%;
+    height:500px;
+
+    margin-left:auto;
+    margin-right:auto;
+    border-collapse:collapse; /*테이블 빈공간 제거*/
+    border-spacing:0; /*테이블 빈공간 제거*/
+
+    border:1px solid black;
+}
+.item3 th{
+    height: 30px;
+    background-color: #de5d5d;
+    border-collapse:collapse; /*테이블 빈공간 제거*/
+    border-spacing:0; /*테이블 빈공간 제거*/
+    border:1px solid black;
+}
+
+.item3 td{
+    border:1px solid black;
+}
